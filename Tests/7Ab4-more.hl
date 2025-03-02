@@ -1,0 +1,46 @@
+// Combine A+ level features
+// Set implementations of Erastothene's sieve to find primes from 1 to n
+// These implementations are not efficient
+
+//This function returns the integer square root of n, i.e. floor(sqrt(n))
+function squareroot(n)
+	var i;
+  for i in [1,n] do
+    if i*i == n then return i;
+    elif i*i > n then return i-1;
+    fi;
+  end;
+  return i;
+end;
+
+function Prime1(n)
+	var i;
+	var Result;
+	Result = [2,n];
+	for i in [2,squareroot(n)] do
+		if i =in Result then
+			Result = Result - {j in Result | j!=i & j%i ==0};
+		fi;
+	end;
+  return Result;
+end;
+
+Prime1(5);
+Prime1(100);
+Prime1(1000);
+Prime1(10000);
+
+function Prime2(n)
+	var i;
+	var Result;
+	Result = [2,n];
+	for i in [2,squareroot(n)] do
+			Result = {j in Result | j==i | j%i !=0 };
+	end;
+  return Result;
+end;
+
+Prime2(5);
+Prime2(100);
+Prime2(1000);
+Prime2(10000);

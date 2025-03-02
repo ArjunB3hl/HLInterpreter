@@ -1,0 +1,28 @@
+// Test set formers
+// Test the structure 
+{i in {} | #1};
+{i in {1} | #1};
+{i in {1,2,3,4} | #1};
+{i in {1,2,3,4} | #0};
+
+// Test the conditions that depend on i
+{j in {1,2,3,4,5,6,7,8,9,10} | j%3==0};
+{i in [1,100] | i%11 == 0};
+
+// Nest set formers in domain
+{i in {j in {2,3,4,5} | #1} | i%2==0};
+{i in {j in [1,100] | j%3==0} | i%2==0};
+{i in {i in [1,100] | i%3==0} | i%2==0};
+
+// Nest set formers in condition
+{i in [1,100] | i =in {j in [1,100] | j%11==0} };
+{i in [1,100] | i =in {j in {k in [1,100] | k%3==0} | j%5==0} };
+{i in [1,100] | i =in {i in {i in [1,100] | i%3==0} | i%5==0} };
+
+//Nest them everywhere
+{i in {i in [1,100]|i%2==0} | i =in {i in {i in [1,100] | i%3==0} | i%5==0} };
+
+function ShrinkSet(Set,i,j,k) 
+  return {i in {i in [1,j]|i%k==0} | i =in {j in {k in Set | k%3==0} | j%k==0} };
+  end;
+ShrinkSet([1,100],10,200,5);
